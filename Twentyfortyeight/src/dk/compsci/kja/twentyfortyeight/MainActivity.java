@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 
 public class MainActivity extends Activity {
 
@@ -26,9 +24,11 @@ public class MainActivity extends Activity {
 		grid.setEngine(_engine);
 		SwipeEngineController controller = new SwipeEngineController(this);
 		VolumeEngineController controller2 = new VolumeEngineController(this);
+		ScreenOrientationController controller3 = new ScreenOrientationController(this);
 		controller.attachHorizontal(_engine);
 		controller.attachVertical(_engine);
-		controller2.attachHorizontal(_engine);
+		controller2.attachHorizontal(_engine);		
+		controller3.attachVertical(_engine);
 		grid.setOnTouchListener(controller);
 	}
 

@@ -8,11 +8,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.support.v4.view.GestureDetectorCompat;
-import android.view.*;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 public class TwentyfortyeightGrid extends View implements
@@ -30,7 +26,6 @@ public class TwentyfortyeightGrid extends View implements
 	private RectF gridBackground;
 	private RectF cell;
 	
-	private GestureDetectorCompat gestureDetector;
 	private Engine engine;
 	private Paint[] tileFontColors;
 	private float[] fontSize;
