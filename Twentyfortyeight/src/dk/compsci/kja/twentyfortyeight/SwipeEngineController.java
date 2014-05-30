@@ -1,12 +1,16 @@
 package dk.compsci.kja.twentyfortyeight;
 
+import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.*;
 
-public class SwipeEngineController extends AbstractEngineController 
-implements GestureDetector.OnGestureListener, View.OnTouchListener {
+public class SwipeEngineController extends AbstractEngineController implements GestureDetector.OnGestureListener, View.OnTouchListener {
 
 	private GestureDetectorCompat _detector;
+	
+	public SwipeEngineController(Context context) {
+		_detector = new GestureDetectorCompat(context, this);
+	}
 	
 	@Override
 	public boolean onDown(MotionEvent e) {
@@ -53,9 +57,6 @@ implements GestureDetector.OnGestureListener, View.OnTouchListener {
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		if (_detector == null) {
-			_detector = new GestureDetectorCompat(v.getContext(), this);
-		}
 		return _detector.onTouchEvent(event);
 	}
 
