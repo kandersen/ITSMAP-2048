@@ -7,46 +7,46 @@ public class MockEngine extends Engine {
 	}
 	
 	private Orientation _orientation;
+	private int _score;
 	
 	public MockEngine() {
 		super();
 		_orientation = Orientation.LEFT;
+		_score = 0;
 		notifyListeners();
 	}
 
 	@Override
 	public void left() {
 		_orientation = Orientation.LEFT;
+		_score++;
 		notifyListeners();
 	}
 
 	@Override
 	public void up() {
 		_orientation = Orientation.UP;
+		_score++;
 		notifyListeners();
 	}
 
 	@Override
 	public void right() {
 		_orientation = Orientation.RIGHT;
+		_score++;
 		notifyListeners();
 	}
 
 	@Override
 	public void down() {
 		_orientation = Orientation.DOWN;
+		_score++;
 		notifyListeners();
 	}
 
 	@Override
 	public int getScore() {
-		switch (_orientation) {
-		case LEFT: return 0;
-		case RIGHT: return 1;
-		case UP: return 2;
-		case DOWN: return 3;		
-		}
-		return -1;
+		return _score;
 	}
 
 	@Override
@@ -78,6 +78,12 @@ public class MockEngine extends Engine {
 	@Override
 	public boolean isDone() {
 		return false;
+	}
+
+	@Override
+	public void reset() {		
+		down();		
+		_score = 0;
 	}
 
 }

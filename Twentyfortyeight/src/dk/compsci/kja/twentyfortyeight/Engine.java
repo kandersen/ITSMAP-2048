@@ -12,6 +12,7 @@ public abstract class Engine {
 	public abstract int getScore();
 	public abstract int[] getTiles();
 	public abstract boolean isDone();
+	public abstract void reset();
 	
 	private final ArrayList<EngineListener> _listeners;
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.View.OnKeyListener;
 
 public class MainActivity extends Activity {
@@ -21,7 +22,9 @@ public class MainActivity extends Activity {
 		_keyListeners = new ArrayList<SimpleKeyListener>();
 		
 		TwentyfortyeightGrid grid = (TwentyfortyeightGrid) findViewById(R.id.grid);
+		ScoreView scoreView = (ScoreView) findViewById(R.id.score_view);
 		grid.setEngine(_engine);
+		scoreView.setEngine(_engine);
 		SwipeEngineController controller = new SwipeEngineController(this);
 		VolumeEngineController controller2 = new VolumeEngineController(this);
 		ScreenOrientationController controller3 = new ScreenOrientationController(this);
@@ -47,6 +50,10 @@ public class MainActivity extends Activity {
 			consumed |= l.onKey(event.getKeyCode());
 		}
 		return consumed;
+	}
+	
+	public void clickReset(View button) {
+		_engine.reset();
 	}
 	
 	

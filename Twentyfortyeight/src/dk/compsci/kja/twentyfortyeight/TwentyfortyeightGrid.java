@@ -1,11 +1,9 @@
 package dk.compsci.kja.twentyfortyeight;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
@@ -13,10 +11,6 @@ import android.view.View;
 
 public class TwentyfortyeightGrid extends View implements
 	EngineListener {
-
-	private static final float CORNER_RADIUS = 3.0f;
-	Paint backgroundColor;
-	Rect background;
 	
 	private Paint gridBackgroundColor;
 	private Paint emptyCellColor;
@@ -44,57 +38,44 @@ public class TwentyfortyeightGrid extends View implements
 	}
 	
 	private void init() {						
-		backgroundColor = new Paint();
-		backgroundColor.setColor(Color.parseColor("#FAF8EF"));
-		backgroundColor.setStyle(Style.FILL);			
-		background = new Rect(0, 0, 0, 0);
-		
+		Resources resources = getResources();
 		gridBackgroundColor = new Paint();
-		gridBackgroundColor.setColor(Color.parseColor("#BBADA0"));
-		gridBackgroundColor.setStyle(Style.FILL);
+		gridBackgroundColor.setColor(resources.getColor(R.color.grid_background));
 		gridBackgroundColor.setAntiAlias(true);
-		gridBackground = new RectF(0, 0, 0, 0);
+		gridBackground = new RectF();
 		
 		emptyCellColor = new Paint();
-		emptyCellColor.setColor(Color.argb(90, 238, 228, 218));
+		emptyCellColor.setColor(resources.getColor(R.color.cell_empty));
 		emptyCellColor.setAntiAlias(true);
 		
-		cell = new RectF(0, 0, 0, 0);
+		cell = new RectF();
 		
 		tileColors = new Paint[11];
 		for (int i = 0; i < tileColors.length; ++i) {
 			tileColors[i] = new Paint();
 			tileColors[i].setAntiAlias(true);
 		}
-		tileColors[0].setColor(Color.parseColor("#EDC22E"));
-		tileColors[1].setColor(Color.parseColor("#EEE4DA"));
-		tileColors[2].setColor(Color.parseColor("#EDE0C8"));
-		tileColors[3].setColor(Color.parseColor("#F2B179"));
-		tileColors[4].setColor(Color.parseColor("#F59563"));
-		tileColors[5].setColor(Color.parseColor("#F67C5F"));
-		tileColors[6].setColor(Color.parseColor("#F65E3B"));
-		tileColors[7].setColor(Color.parseColor("#EDCF72"));
-		tileColors[8].setColor(Color.parseColor("#EDCC61"));
-		tileColors[9].setColor(Color.parseColor("#EDC850"));
-		tileColors[10].setColor(Color.parseColor("#EDC53F"));
+		tileColors[0].setColor(resources.getColor(R.color.tile_super));
+		tileColors[1].setColor(resources.getColor(R.color.tile_2));
+		tileColors[2].setColor(resources.getColor(R.color.tile_4));
+		tileColors[3].setColor(resources.getColor(R.color.tile_8));
+		tileColors[4].setColor(resources.getColor(R.color.tile_16));
+		tileColors[5].setColor(resources.getColor(R.color.tile_32));
+		tileColors[6].setColor(resources.getColor(R.color.tile_64));
+		tileColors[7].setColor(resources.getColor(R.color.tile_128));
+		tileColors[8].setColor(resources.getColor(R.color.tile_256));
+		tileColors[9].setColor(resources.getColor(R.color.tile_512));
+		tileColors[10].setColor(resources.getColor(R.color.tile_1024));
 
 		tileFontColors = new Paint[11];			
 		for (int i = 0; i < tileFontColors.length; ++i) {
 			tileFontColors[i] = new Paint();
-			tileFontColors[i].setTextAlign(Paint.Align.CENTER);				
+			tileFontColors[i].setTextAlign(Paint.Align.CENTER);	
+			tileFontColors[i].setAntiAlias(true);	
+			tileFontColors[i].setColor(resources.getColor(R.color.tile_font_light));
 		}
-		tileFontColors[0].setColor(Color.parseColor("#F9F6F2"));
-		tileFontColors[1].setColor(Color.parseColor("#776E65"));
-		tileFontColors[2] = tileFontColors[1];
-		tileFontColors[3] = tileFontColors[0];
-		tileFontColors[4] = tileFontColors[0];
-		tileFontColors[5] = tileFontColors[0];
-		tileFontColors[6] = tileFontColors[0];
-		tileFontColors[7] = tileFontColors[0];
-		tileFontColors[8] = tileFontColors[0];
-		tileFontColors[9] = tileFontColors[0];
-		tileFontColors[10] = tileFontColors[0];
-	
+		tileFontColors[1].setColor(resources.getColor(R.color.tile_font_dark));
+		tileFontColors[2].setColor(resources.getColor(R.color.tile_font_dark));		
 		
 		fontSize = new float[5];
 		
@@ -102,34 +83,30 @@ public class TwentyfortyeightGrid extends View implements
 			Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/ClearSans-Bold.ttf");
 			for(int i = 0; i < tileFontColors.length; ++i) {
 				tileFontColors[i].setTypeface(font);				
-				tileFontColors[i].setTextSize(14);
 				tileFontColors[i].setAntiAlias(true);
 			}
 		}
 		
 		tiles = new int[16];
-		tiles[0] = 1;
-		tiles[1] = 4;
-		tiles[2] = 9;
-		tiles[3] = 10;
 	}
 	
 	public void setEngine(Engine e) {
 		if (engine != null) {
 			engine.removeChangeListener(this);
 		}
-		engine = e;
-		engine.addChangeListener(this);		
+		engine = e;		
+		engine.addChangeListener(this);
+		tiles = e.getTiles();
+		invalidate();
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {	
-		int size = getWidth();
-		background.set(0, 0, size, size);
-		canvas.drawRect(background, backgroundColor);
+		int size = getWidth();		
+		float cornerRadius = getResources().getDimension(R.dimen.corner_radius);
 		
 		gridBackground.set(0, 0, size, size);
-		canvas.drawRoundRect(gridBackground, CORNER_RADIUS, CORNER_RADIUS, gridBackgroundColor);
+		canvas.drawRoundRect(gridBackground, cornerRadius, cornerRadius, gridBackgroundColor);
 		
 		int margin = size / 32;
 		int cellSize = (size - 5 * margin) / 4;
@@ -144,9 +121,9 @@ public class TwentyfortyeightGrid extends View implements
 			int topLeftX = margin + (i % 4) * (margin + cellSize);
 			int topLeftY = margin + (i / 4) * (margin + cellSize);
 			cell.set(topLeftX, topLeftY, topLeftX + cellSize, topLeftY + cellSize);
-			canvas.drawRoundRect(cell, CORNER_RADIUS, CORNER_RADIUS, emptyCellColor);
+			canvas.drawRoundRect(cell, cornerRadius, cornerRadius, emptyCellColor);
 			if (tiles[i] != 0) {				
-				canvas.drawRoundRect(cell, CORNER_RADIUS, CORNER_RADIUS, tileColors[tiles[i]]);				
+				canvas.drawRoundRect(cell, cornerRadius, cornerRadius, tileColors[tiles[i]]);				
 				String string = TWO_TO_THE_POWER_OF[tiles[i]];
 				tileFontColors[tiles[i]].setTextSize(fontSize[string.length()]);						
 				int offset = (int) tileFontColors[tiles[i]].getTextSize() / 3;
