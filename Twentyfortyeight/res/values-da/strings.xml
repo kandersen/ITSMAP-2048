@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="about">Om Spillet</string>
+    <string name="credit_ClearSans">ClearSans er designet af Daniel Ratighan ved Monotype under ledelse af Intels Open Source Technology Center, og er brugt med tilladelse jf. Apache Licensen, Version 2.0:</string>
+    <string name="new_game">Genstart</string>
+    <string name="controls">Inputmetoder</string>
+    <string name="credit_2048">Baseret på Gabrielle Cirullis 2048, med tilladelse betinget af MIT licensen:</string>
+    <string name="apache_msg">Teksten af Apache Licensen, Version 2.0, kan findes på </string>
+    <string name="horizontal_axis">Vandrette Akse</string>
+    <string name="app_name">Tyveotteogfyrre</string>
+    <string name="MIT_msg">Teksten af MIT Licensen kan findes på </string>
+    <string name="settings">Indstillinger</string>
+</resources>

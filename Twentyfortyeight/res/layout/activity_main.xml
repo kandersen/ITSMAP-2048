@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1" />
 
-        <dk.compsci.kja.twentyfortyeight.Title
+        <dk.compsci.kja.twentyfortyeight.view.Title
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"/>
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
 
-        <dk.compsci.kja.twentyfortyeight.ScoreView
+        <dk.compsci.kja.twentyfortyeight.view.ScoreView
             android:id="@id/score_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -66,7 +66,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1" />
 
-        <dk.compsci.kja.twentyfortyeight.MainButton
+        <dk.compsci.kja.twentyfortyeight.view.MainButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -77,18 +77,19 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1" />
 
-        <dk.compsci.kja.twentyfortyeight.MainButton
+        <dk.compsci.kja.twentyfortyeight.view.MainButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/settings" />
+            android:text="@string/settings"
+            android:onClick="clickSettings" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.1" />
 
-        <dk.compsci.kja.twentyfortyeight.MainButton
+        <dk.compsci.kja.twentyfortyeight.view.MainButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -113,7 +114,7 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <dk.compsci.kja.twentyfortyeight.TwentyfortyeightGrid
+        <dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid
             android:id="@id/grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

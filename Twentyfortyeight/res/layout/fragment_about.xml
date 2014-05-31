@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/about"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/title_2048"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/credit_2048" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1" 
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+        <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+            android:id="@id/MIT_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="" />
+
+    </ScrollView>
+
+    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/clearsans"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/credit_ClearSans" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1" 
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+        <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+            android:id="@id/apache_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false" />
+
+    </ScrollView>
+
+</LinearLayout>

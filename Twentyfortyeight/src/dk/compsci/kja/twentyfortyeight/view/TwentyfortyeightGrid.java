@@ -1,5 +1,8 @@
-package dk.compsci.kja.twentyfortyeight;
+package dk.compsci.kja.twentyfortyeight.view;
 
+import dk.compsci.kja.twentyfortyeight.Engine;
+import dk.compsci.kja.twentyfortyeight.EngineListener;
+import dk.compsci.kja.twentyfortyeight.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;

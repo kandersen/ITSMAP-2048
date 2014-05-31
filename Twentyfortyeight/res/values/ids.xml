@@ -2,4 +2,11 @@
 <resources>
     <item name="score_view" type="id"/>
     <item name="grid" type="id" />
+    <item name="apache_text" type="id" />
+    <item name="MIT_text" type="id" />
+    <item name="spinner_vertical_axis" type="id" />
+    <item name="spinner_horizontal_axis" type="id" />
+    <item name="fragment_settings_list" type="id"/>
+    <item name="fragment_settings_controls" type="id"/>
+    <item name="single_setting_frame" type="id"/>
 </resources>

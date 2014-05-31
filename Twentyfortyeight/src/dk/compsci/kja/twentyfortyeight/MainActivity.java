@@ -2,7 +2,10 @@ package dk.compsci.kja.twentyfortyeight;
 
 import java.util.ArrayList;
 
+import dk.compsci.kja.twentyfortyeight.view.ScoreView;
+import dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -54,6 +57,10 @@ public class MainActivity extends Activity {
 	
 	public void clickReset(View button) {
 		_engine.reset();
+	}
+	
+	public void clickSettings(View button) {
+		startActivity(new Intent(this, SettingsActivity.class));
 	}
 	
 	
