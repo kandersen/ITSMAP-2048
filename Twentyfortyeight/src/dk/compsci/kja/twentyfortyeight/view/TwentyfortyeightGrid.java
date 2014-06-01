@@ -1,5 +1,7 @@
 package dk.compsci.kja.twentyfortyeight.view;
 
+import java.util.ArrayList;
+
 import dk.compsci.kja.twentyfortyeight.Engine;
 import dk.compsci.kja.twentyfortyeight.EngineListener;
 import dk.compsci.kja.twentyfortyeight.R;
@@ -10,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class TwentyfortyeightGrid extends View implements
@@ -26,6 +29,7 @@ public class TwentyfortyeightGrid extends View implements
 	private Engine engine;
 	private Paint[] tileFontColors;
 	private float[] fontSize;
+	private ArrayList<OnTouchListener> _onTouchListeners;
 	
 	public static final String[] TWO_TO_THE_POWER_OF = 
 		{ "1", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048" };
@@ -40,7 +44,8 @@ public class TwentyfortyeightGrid extends View implements
 		init();		
 	}
 	
-	private void init() {						
+	private void init() {
+		_onTouchListeners = new ArrayList<View.OnTouchListener>();
 		Resources resources = getResources();
 		gridBackgroundColor = new Paint();
 		gridBackgroundColor.setColor(resources.getColor(R.color.grid_background));
@@ -149,5 +154,24 @@ public class TwentyfortyeightGrid extends View implements
 	public void onChange(Engine e) {
 		tiles = e.getTiles();	
 		invalidate();
+	}
+	
+	
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		boolean consumed = false;
+		for(OnTouchListener otl : _onTouchListeners) {
+			consumed |= otl.onTouch(this, event);
+		}
+		return consumed;
+	}
+
+	public void addOnTouchListener(OnTouchListener otl) {
+		_onTouchListeners.add(otl);
+	}
+	
+	public synchronized void removeOnTouchListener(Object otl) {
+		_onTouchListeners.remove(otl);
 	}
 }

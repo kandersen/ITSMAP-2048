@@ -1,15 +1,26 @@
 package dk.compsci.kja.twentyfortyeight;
 
+import java.util.ArrayList;
+
+import dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid;
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.*;
+import android.widget.HorizontalScrollView;
 
-public class SwipeEngineController extends AbstractEngineController implements GestureDetector.OnGestureListener, View.OnTouchListener {
+public class SwipeEngineController implements EngineController, GestureDetector.OnGestureListener, View.OnTouchListener {
 
 	private GestureDetectorCompat _detector;
+	private TwentyfortyeightGrid _view;
+	private ArrayList<Engine> _horizontals;
+	private ArrayList<Engine> _verticals;
 	
-	public SwipeEngineController(Context context) {
+	public SwipeEngineController(Context context, TwentyfortyeightGrid view) {
+		_horizontals = new ArrayList<Engine>();
+		_verticals = new ArrayList<Engine>();
 		_detector = new GestureDetectorCompat(context, this);
+		_view = view;
+		_view.addOnTouchListener(this);
 	}
 	
 	@Override
@@ -30,6 +41,30 @@ public class SwipeEngineController extends AbstractEngineController implements G
 			up();
 		}
  		return true;
+	}
+
+	private void up() {
+		for(Engine e : _verticals) {
+			e.up();
+		}		
+	}
+
+	private void down() {
+		for(Engine e : _verticals) {
+			e.down();
+		}
+	}
+
+	private void left() {
+		for(Engine e : _horizontals) {
+			e.left();
+		}			
+	}
+
+	private void right() {
+		for(Engine e : _horizontals) {
+			e.right();
+		}
 	}
 
 	@Override
@@ -58,6 +93,28 @@ public class SwipeEngineController extends AbstractEngineController implements G
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		return _detector.onTouchEvent(event);
+	}
+
+	@Override
+	public void removeVertical(Engine e) {
+		_verticals.remove(e);
+		_view.removeOnTouchListener(this);
+	}
+
+	@Override
+	public void removeHorizontal(Engine e) {
+		_horizontals.remove(e);
+		_view.removeOnTouchListener(null);
+	}
+
+	@Override
+	public void attachVertical(Engine e) {
+		_verticals.add(e);		
+	}
+
+	@Override
+	public void attachHorizontal(Engine e) {
+		_horizontals.add(e);
 	}
 
 }

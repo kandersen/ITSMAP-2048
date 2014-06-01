@@ -9,4 +9,6 @@
     <item name="fragment_settings_list" type="id"/>
     <item name="fragment_settings_controls" type="id"/>
     <item name="single_setting_frame" type="id"/>
+    <item name="main_screen" type="id"/>
+    <item name="game_over_screen" type="id"/>
 </resources>

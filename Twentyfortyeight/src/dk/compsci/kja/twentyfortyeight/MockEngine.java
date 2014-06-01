@@ -77,7 +77,7 @@ public class MockEngine extends Engine {
 
 	@Override
 	public boolean isDone() {
-		return false;
+		return _score == 20;
 	}
 
 	@Override

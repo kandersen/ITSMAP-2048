@@ -20,4 +20,9 @@
     <string name="apache_msg">The full text of the
  Apache License, Version 2.0, can be found at</string>
     <string name="MIT_msg">The full text of the MIT License can be found at </string>
+    <string name="swipe">Swipe</string>
+    <string name="volume_control">Volume control</string>
+    <string name="screen_rotation">Screen Rotation</string>
+    <string name="HORIZONTAL">Horizontal</string>
+    <string name="VERTICAL">Vertical</string>
 </resources>
