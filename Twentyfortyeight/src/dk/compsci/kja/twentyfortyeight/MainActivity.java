@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements EngineListener {
 		detachControls();
 		_engine.reset();
 		if(_gameOverScreen.isShown()) {
-			AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+			AlphaAnimation fadeOut = new AlphaAnimation(0.5f, 0.0f);
 			fadeOut.setAnimationListener(new AnimationListener() {
 
 				@Override
@@ -174,7 +174,7 @@ public class MainActivity extends Activity implements EngineListener {
 		if(e.isDone()) {
 			detachControls();
 			_gameOverScreen.setVisibility(View.VISIBLE);
-			AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+			AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 0.5f);
 			fadeIn.setDuration(_animationDuration);
 			fadeIn.setFillAfter(true);
 			_gameOverScreen.startAnimation(fadeIn);		
