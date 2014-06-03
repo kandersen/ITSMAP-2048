@@ -19,12 +19,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class HighscoreActivity extends FragmentActivity {
+public class HighscoreActivity extends Activity {
 
 	private AsyncTask<Object, Object, ArrayList<String>> _task = new AsyncTask<Object, Object, ArrayList<String>>() {
 
@@ -96,9 +98,13 @@ public class HighscoreActivity extends FragmentActivity {
 		}
 
 		@Override
-		protected void onPostExecute(final ArrayList<String> result) {
-			_list.clear();
-			_list.addAll(result);
+		protected void onPostExecute(final ArrayList<String> result) {			
+			String[] strings = new String[result.size()];
+			result.toArray(strings);
+			_adapter = new ArrayAdapter<String>(HighscoreActivity.this, R.layout.simple_list_item, strings);
+			ListView list = (ListView)findViewById(R.id.highscore_list);
+			list.setAdapter(_adapter);
+			
 		}
 
 	};
@@ -109,11 +115,8 @@ public class HighscoreActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(final Bundle arg0) {
 		super.onCreate(arg0);
-		setContentView(R.layout.activity_settings);
+		setContentView(R.layout.activity_highscore);
 		_list = new ArrayList<String>();
-		_adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, _list);
-
 		_task.execute();
 	}
 

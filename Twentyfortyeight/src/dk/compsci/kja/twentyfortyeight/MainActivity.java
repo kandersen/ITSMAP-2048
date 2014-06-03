@@ -41,11 +41,11 @@ public class MainActivity extends Activity implements EngineListener {
 		setContentView(R.layout.activity_main);
 
 		_gameOverScreen = findViewById(R.id.game_over_screen);
-		_gameOverScreen.setVisibility(View.GONE);
+		
 		_animationDuration = getResources().getInteger(
 				android.R.integer.config_longAnimTime);
 
-		_engine = new MockEngine();
+		_engine = new EngineImpl();
 		_engine.addChangeListener(this);
 		_keyListeners = new ArrayList<SimpleKeyListener>();
 		_controllers = new ArrayList<EngineController>();
@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements EngineListener {
 		detachControls();
 		_engine.reset();
 		if (_gameOverScreen.isShown()) {
-			AlphaAnimation fadeOut = new AlphaAnimation(0.5f, 0.0f);
+			AlphaAnimation fadeOut = new AlphaAnimation(0.75f, 0.0f);
 			fadeOut.setAnimationListener(new AnimationListener() {
 
 				@Override
@@ -196,15 +196,19 @@ public class MainActivity extends Activity implements EngineListener {
 		}
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet getMethod = new HttpGet(myURI);
+		Toast toast = null;
 		try {
 			httpClient.execute(getMethod);
+			toast = Toast.makeText(this, "Score submitted!", Toast.LENGTH_LONG);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
+			toast = Toast.makeText(this, "Connection to server failed", Toast.LENGTH_LONG);
 		} catch (IOException e) {
 			e.printStackTrace();
+			toast = Toast.makeText(this, "Connection to server failed", Toast.LENGTH_LONG);
 		}
 
-		Toast.makeText(this, "Score submitted!", Toast.LENGTH_LONG).show();
+		toast.show();
 		clickReset(button);
 	}
 
@@ -213,7 +217,7 @@ public class MainActivity extends Activity implements EngineListener {
 		if (e.isDone()) {
 			detachControls();
 			_gameOverScreen.setVisibility(View.VISIBLE);
-			AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 0.5f);
+			AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 0.7f);
 			fadeIn.setDuration(_animationDuration);
 			fadeIn.setFillAfter(true);
 			_gameOverScreen.startAnimation(fadeIn);

@@ -7,7 +7,7 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="10" 
         tools:ignore="OldTargetApi"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -24,6 +24,6 @@
         
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".SingleSettingActivity"/>
-    </application>
-
+        <activity android:name=".HighscoreActivity"></activity>
+    </application>    
 </manifest>
