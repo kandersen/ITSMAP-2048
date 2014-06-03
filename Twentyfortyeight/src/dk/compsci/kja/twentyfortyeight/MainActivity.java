@@ -1,8 +1,15 @@
 package dk.compsci.kja.twentyfortyeight;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
-import dk.compsci.kja.twentyfortyeight.view.ScoreView;
-import dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +23,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Toast;
+import dk.compsci.kja.twentyfortyeight.view.ScoreView;
+import dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid;
 
 public class MainActivity extends Activity implements EngineListener {
 
@@ -25,39 +34,40 @@ public class MainActivity extends Activity implements EngineListener {
 	private TwentyfortyeightGrid _grid;
 	private View _gameOverScreen;
 	private int _animationDuration;
-	
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		_gameOverScreen = findViewById(R.id.game_over_screen);
 		_gameOverScreen.setVisibility(View.GONE);
-		_animationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
-		
+		_animationDuration = getResources().getInteger(
+				android.R.integer.config_longAnimTime);
+
 		_engine = new MockEngine();
 		_engine.addChangeListener(this);
 		_keyListeners = new ArrayList<SimpleKeyListener>();
 		_controllers = new ArrayList<EngineController>();
-		
+
 		_grid = (TwentyfortyeightGrid) findViewById(R.id.grid);
 		ScoreView scoreView = (ScoreView) findViewById(R.id.score_view);
 		_grid.setEngine(_engine);
-		scoreView.setEngine(_engine);		
+		scoreView.setEngine(_engine);
 	}
-	
+
 	@Override
-	protected void onPause() {		
+	protected void onPause() {
 		super.onPause();
 		Log.d("MAIN", "onPause");
 		detachControls();
-		
+
 	}
 
 	private void detachControls() {
 		for (EngineController ec : _controllers) {
 			ec.removeHorizontal(_engine);
-			ec.removeVertical(_engine);			
+			ec.removeVertical(_engine);
 		}
 		_controllers.clear();
 	}
@@ -70,30 +80,35 @@ public class MainActivity extends Activity implements EngineListener {
 	}
 
 	private void attachControls() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		EngineController controller;
-		switch (InputMethod.valueOf(prefs.getInt(getString(R.string.HORIZONTAL), InputMethod.SWIPE.ordinal()))) {
+		switch (InputMethod.valueOf(prefs.getInt(
+				getString(R.string.HORIZONTAL), InputMethod.SWIPE.ordinal()))) {
 		case SWIPE:
 			Log.d("MAIN", "OnResume.switch.case.SWIPE");
-			controller = new SwipeEngineController(this, _grid);			
+			controller = new SwipeEngineController(this, _grid);
 			break;
 		case ROTATE:
 			controller = new ScreenOrientationController(this);
 			break;
 		case VOLUME:
-			VolumeEngineController volumeEngineController = new VolumeEngineController(this);
+			VolumeEngineController volumeEngineController = new VolumeEngineController(
+					this);
 			addKeyListener(volumeEngineController);
 			controller = volumeEngineController;
 			break;
 		default:
 			controller = null;
 			break;
-		
-		};
+
+		}
+		;
 		_controllers.add(controller);
 		controller.attachHorizontal(_engine);
-		
-		switch (InputMethod.valueOf(prefs.getInt(getString(R.string.VERTICAL), InputMethod.SWIPE.ordinal()))) {
+
+		switch (InputMethod.valueOf(prefs.getInt(getString(R.string.VERTICAL),
+				InputMethod.SWIPE.ordinal()))) {
 		case SWIPE:
 			controller = new SwipeEngineController(this, _grid);
 			break;
@@ -101,57 +116,57 @@ public class MainActivity extends Activity implements EngineListener {
 			controller = new ScreenOrientationController(this);
 			break;
 		case VOLUME:
-			VolumeEngineController volumeEngineController = new VolumeEngineController(this);
+			VolumeEngineController volumeEngineController = new VolumeEngineController(
+					this);
 			addKeyListener(volumeEngineController);
 			controller = volumeEngineController;
 			break;
 		default:
 			controller = null;
 			break;
-		};
+		}
+		;
 		_controllers.add(controller);
 		controller.attachVertical(_engine);
 	}
 
-
-
-	public void addKeyListener(SimpleKeyListener l) {
-		_keyListeners.add(l);	
+	public void addKeyListener(final SimpleKeyListener l) {
+		_keyListeners.add(l);
 	}
-	
-	public void removeKeyListener(OnKeyListener l) {
+
+	public void removeKeyListener(final OnKeyListener l) {
 		_keyListeners.remove(l);
 	}
-	
+
 	@Override
-	public boolean dispatchKeyEvent(KeyEvent event) {
+	public boolean dispatchKeyEvent(final KeyEvent event) {
 		boolean consumed = false;
 		for (SimpleKeyListener l : _keyListeners) {
 			consumed |= l.onKey(event.getKeyCode());
 		}
 		return consumed;
 	}
-	
-	public void clickReset(View button) {
+
+	public void clickReset(final View button) {
 		detachControls();
 		_engine.reset();
-		if(_gameOverScreen.isShown()) {
+		if (_gameOverScreen.isShown()) {
 			AlphaAnimation fadeOut = new AlphaAnimation(0.5f, 0.0f);
 			fadeOut.setAnimationListener(new AnimationListener() {
 
 				@Override
-				public void onAnimationStart(Animation animation) { 
-					//NO-OP
+				public void onAnimationStart(final Animation animation) {
+					// NO-OP
 				}
 
 				@Override
-				public void onAnimationRepeat(Animation animation) {
-					//NO-OP
+				public void onAnimationRepeat(final Animation animation) {
+					// NO-OP
 				}
 
 				@Override
-				public void onAnimationEnd(Animation animation) {
-					_gameOverScreen.setVisibility(View.GONE);				
+				public void onAnimationEnd(final Animation animation) {
+					_gameOverScreen.setVisibility(View.GONE);
 				}
 			});
 			fadeOut.setDuration(_animationDuration);
@@ -159,28 +174,50 @@ public class MainActivity extends Activity implements EngineListener {
 		}
 		attachControls();
 	}
-	
-	public void clickSettings(View button) {
+
+	public void clickSettings(final View button) {
 		startActivity(new Intent(this, SettingsActivity.class));
 	}
 
-	public void clickSubmitScore(View button) {
+	public void clickHighscore(final View button) {
+		startActivity(new Intent(this, HighscoreActivity.class));
+	}
+
+	public void clickSubmitScore(final View button) {
+		// call 2048.compsci.dk/register.php?score=[score]
+
+		URI myURI = null;
+
+		try {
+			myURI = new URI("http://2048.compsci.dk/register.php?score="
+					+ _engine.getScore());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpGet getMethod = new HttpGet(myURI);
+		try {
+			httpClient.execute(getMethod);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		Toast.makeText(this, "Score submitted!", Toast.LENGTH_LONG).show();
 		clickReset(button);
 	}
-	
+
 	@Override
-	public void onChange(Engine e) {
-		if(e.isDone()) {
+	public void onChange(final Engine e) {
+		if (e.isDone()) {
 			detachControls();
 			_gameOverScreen.setVisibility(View.VISIBLE);
 			AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 0.5f);
 			fadeIn.setDuration(_animationDuration);
 			fadeIn.setFillAfter(true);
-			_gameOverScreen.startAnimation(fadeIn);		
-		}		
+			_gameOverScreen.startAnimation(fadeIn);
+		}
 	}
-	
-	
-	
+
 }

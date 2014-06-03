@@ -45,6 +45,7 @@
 			    android:layout_marginLeft="10dp"
 			    android:layout_marginRight="5dp"
 			    android:layout_weight="1"
+			    android:onClick="clickHighscore"
 			    android:text="@string/highscores" />
 
 			<dk.compsci.kja.twentyfortyeight.view.MainButton
