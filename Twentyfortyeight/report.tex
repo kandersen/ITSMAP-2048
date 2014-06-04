@@ -1,22 +1,114 @@
 \documentclass[a4paper, 12pt]{article}
-\usepackage[a4paper,hmargin=3cm,vmargin=3cm]{geometry}
+%\usepackage[a4paper,hmargin=3cm,vmargin=3cm]{geometry}
 \usepackage[english]{babel}
 \usepackage[applemac]{inputenc}
 \usepackage[sc]{mathpazo}
 \linespread{1.05}         % Palatino needs more leading (space between lines)
 \usepackage[T1]{fontenc}
 
-\title{ITSMAP Report: 2048}
-\author{20103316 \quad Kristoffer Andersen}
-\date{6^{th} of June, 2014}
+\usepackage{amsmath}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{Reinventing 2048\\\large{An ITSMAP Project Report}}
+\author{Kristoffer Andersen\\\large{20103316} \and
+Christian Clausen \\ \large{20081015}}
+\date{$6^{th}$ of June, 2014}
 
 \begin{document}
 \maketitle
+\nonumber
+\newpage
+\tableofcontents
+\newpage
 % Front page
 % TOC
+\section{Introduction}
+The game known as 2048 went viral in 2014 when Gabrielle Cirulli
+posted a simple game with a 4 by 4 grid with the squares from 2 to
+2048 on Github. The gameplay was self-explanatory, the visuals
+timeless and a viral hit was born.
+
+Since then the game has spawned numerous variations, but for a game
+with such obviously touch-friendly input, the variations in the mobile
+market has been few and far between.
+
+This report presents a reimplementation of Cirulli's 2048 from scratch
+in the native Android Framework, but with a twist: we wholly embrace
+the prospects that the app is running on a mobile device.
+
+We proceed with detailing a specification of the problem, and
+explicating in what ways our vision is different from the original. We
+then go on to sketch some of the architectural decisions that we made
+in order to facilitate our design. Finally, we detail the Android
+Framework features that we made use of, in addition to the features
+that we \emph{could} have made use of. Additionally, we bring a work
+plan in the appendix, detailing who did what on the project.
+
+\section{Specification}
 % Requirements specification (Comments and sketches like GUI)
+The goal with our app is to provide the basic 2048 experience. As
+such, we here briefly outline the classic game mechanics, for the
+readers that are not familiar with it.
+
+\subsection{Core Game Mechanics}
+
+The game is played on a quadratic grid with 4 squares to a
+side. During the course of the game, the grid is filled with tiles
+that can be slid across the grid. The 4 only actions the player can
+take is to slide all tiles across the grid in one of the 4 cardinal
+directions: up, down, left and right. \emph{Playing} the game thus
+amounts to deciding a sequence of these directions.
+
+The tiles are numbered with subsequent powers of 2, starting with
+2. When two tiles with the same value collide, they merge to a new
+tile with the sum of the two involved numbers. That is, as tile with
+the number 32 collides with another tile with the number 32, they
+merge to form a new tile with the number 64.
+
+The objective is the game is to form a tile with the number 2048. When
+two tiles merge, the player is also awarded the sum of the two tiles
+in points.
+
+When the player has made a decision, slid the tiles and whatever
+merges may occur has occured, the game places a new tile in a randomly
+chosen empty cell, with the value 2 or 4.
+
+The dynamics of the game thus arise as the board fills up, making it
+more difficult for the player to merge tiles. And, as the game
+progresses, the average value of the tiles already on the board
+increases, and as such it becomes more difficult to use the new 2 and
+4 tiles the game places.
+
+The game is over when there are no more moves that would result in a
+tile moving or two tiles merging.
+
+\subsection{Variations}
+
+The game as described in the previous section is how Cirulli published
+it in 2014, with a 4 by 4 grid and the tiles from 2 to 2048. It was
+implemented in JavaScript, and used the arrow keys as input. Simple
+\emph{WebView}-style apps were made for the Android and iOS platforms
+with touchbased input, where a swipe in the cardinal directions
+results in the corresponding move in the game.
+
+However, the fact that Cirulli decided to publically release the
+intellectual proprties associated with the game, the fact that the
+game is hoste don GitHub (such that with one click, one gets a
+complete, hosted copy of Cirulli's game to alter as one sees fit, live
+and on the internet from the very first moment), combined with its
+accessibility has meant that it has inspired countless variations.
+
+Some variations extend the dimensionality of the grid on which the
+game is played.
+
+
+
+\section{Software Architecture}
 % Assumptions for and explanatins of chosen design
 % UML + Sequence diagrams of key components in the APP
+
+\section{Uses of the Android Framework}
 % We have used
 % - Activities + Fragments
 % - Preferences
@@ -31,5 +123,29 @@
 % - Network connections
 % - Local storage?
 % - Notifications
+
+\section{Conclusion}
 % Conclusion
+
+\newpage
+\section{Appendix: Workplan}
+\subsection{Christian's Contribution}
+\begin{itemize}
+\item \code{src/dk/compsci/twentyfortyeight/}
+  \begin{itemize}
+  \item \code{HighScoreActivity.java}
+  \item \code{EngineImpl.java}
+  \end{itemize}
+\item \code{res/layout/}
+  \begin{itemize}
+  \item \code{activity\_highscore.xml}
+  \end{itemize}
+\item The REST service running at \code{http://2048.compsci.dk/json.php}
+\end{itemize}
+\subsection{Kristoffer's Contribution}
+\begin{itemize}
+\item The report
+\item Everything not mentioned under \textbf{Christian's Contribution}
+\end{itemize}
+
 \end{document}
