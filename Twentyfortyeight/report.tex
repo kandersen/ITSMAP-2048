@@ -8,6 +8,7 @@
 
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{graphicx}
 
 \newcommand{\link}[1]{\href{http://#1}{\texttt{#1}}}
 
@@ -163,7 +164,7 @@ The app has to...
 \item ... provide an on-line highscore service, in order to make use
   of the connectivity features of the Android Platform and to enchance
   the social aspect of the game.
-\item ... provide appliaction developers with a framework for
+\item ... provide application developers with a framework for
   prototyping new input method variations for games of 2048.
 \end{itemize}
 
@@ -190,16 +191,142 @@ interactions with the views as events to the controllers, who bear the
 responsibility of translating these events into state changes on the
 model.
 
-% Assumptions for and explanatins of chosen design
-% UML + Sequence diagrams of key components in the APP
+The overall architecture is illustrated with the concrete interfaces
+of our app playing the roles of model, view and controller in the UML
+diagram in Figure \ref{fig:mvc-1.png}.
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{mvc-1.png}
+  \caption{The MVC pattern as implemented in our 2048 app}
+  \label{fig:mvc-1.png}
+\end{figure}
+
+The data that we store in our game is the state of the game board and
+the user score. This state also gives rise to some derived queries
+like the layout of the board (\code{getTiles()}) and wether the game
+is over or not (\code{isDone}). This state is used to visualize the
+state of the game, and whenever the game state changes the concrete
+implementation of \code{Engine} is supposed to call \code{onChange} on
+every registered EngineListener. These state changes are caused by the
+concrete EngineControllers in play, who have access to the modifiers
+of the Engine implementation. A minor twist on the classic MVC UML
+diagram is that the controller \emph{also} exhibits an interface for
+registering models, which we found necessary to handle the activity
+lifecycle with regards to resource handling in our app.
+
+We have two  concrete views in our  game, as detailed in  the full UML
+diagram of the MVC  implementation found in \label{fig:mvc-2.png}. One
+is  the  grid  (\code{TwentyfortyeightGrid})  and  the  other  is  the
+\code{ScoreView}, a GUI element for showing the score of the game. 
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{mvc-2.png}
+  \caption{The MVC pattern as implemented in our 2048 app, with all
+    concrete classes indicated.}
+  \label{fig:mvc-2.png}
+\end{figure}
+
+The controllers shown each implement a way of interpreting user events
+in terms of state updates on the game model. The volume key controller
+intercepts key presses to the volume controls present on all android
+devices, and translates into either vertical or horizontal slides,
+depending on which axis it was registered as controlling. The screen
+orientation controller similarly controls an axis by using the
+orientation around the horizontal axis as reference for motion
+events\footnote{We have found it works best for controlling the
+  horizontal axis!}. Finally, the swipe controller is a little
+interesting as it plays a role in two frameworks. For one, it's a
+controller in our MVC pattern. But then, it is also a \emph{listener}
+in the Observer pattern used by the Android Framework in order to
+handle events. As such it must be registered with a View (note, of the
+Android Framework GUI variety, not our pattern!) in order to receive
+input events. The \code{TwentyfortyeightGrid} plays a similar dual
+role, and so is aptly suited to act as the \emph{observed} object needed in
+the Android Observer pattern. An entire exchange between the
+\code{SwipController}, the \code{TwentyfortyeightGrid} and the
+\code{EngineImpl} is detailed in the sequence diagram in Figure \ref{fig:seq-1.png}:
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{seq-1.png}
+  \caption{A sample interaction between model, view and controller in
+    our app.}
+  \label{fig:seq-1.png}
+\end{figure}
+
+An unintended benefit gained from a strict implementation of the MVC
+is the clean separation of concerns. The data is cleanly encapsulated
+by the \code{Engine} interface. This means that testing with the
+technique known as mocking is a breeze. We implement a simplified to
+the point of triviality version of the game logic, such that it is
+both deterministic and entirely predictable. This version can be found
+in \code{MockEngine.java}, and was used while testing the various
+controllers and views. This way, the random logic of the engine and
+genral complexity of the real engine minimally camouflaged bugs and
+other errors in those components under the test. It's not quite unit
+testing, but the technique did allow us to isloate the components
+under the test under the assumption that the other components were so
+simply mocked that they could not be wrong!
 
 \section{Uses of the Android Framework}
+
+We have used numerous parts of the Android Framework, each detailed in
+its own subsection.
+
 % We have used
-% - Activities + Fragments
-\subsection{Activities and Fragments}
-To achieve our layout we use several Activities and Fragments.
+% - Activities + Fragments + Intents
+\subsection{Activities, Intents and Fragments}
+One cannot create an Android App without touching these two parts of
+the API. The acticity and fragment abstraction clearly isolate ``doing
+one thing'' on a mobile device, and intents allow for the transitions
+between them. Logically, we have an activity and/or fragment for each
+interaction a user can have with our app.
+
+We have an activity displaying the main grid, for interaction with the
+game state and the submission of highscores. We have an activity for
+the display of submitted highscores. We have a fragment for changing
+the active input method, and we have a fragment for displaying
+licensing details where we pay homage to the original 2048 in addition
+to the people making the font we used available.
+
+The use of fragments is key to making dynamic layouts. Unlike its
+competitor, the iOS platform, an Android App should expect to run on a
+countless number of hardware configurations, with varying screen
+sizes, resolutions and aspects to say the least. To that end, the
+Android Framework provides isolated GUI and logic components known as
+fragments, such that we can dynamically piece together one activity at
+runtime, when the hardware the app is running on is known.
+
+We exploit that in our app by displaying the possible settings in the
+classic list of settings with a main view in the middle configuration
+when on large screens and a list switching to a fullscreen settings
+fragment on smaller screens, just as we practiced in the handins for
+the course. This allows us to utilize the screen maximally.
+
+The main activity is locked in portrait mode in order to preserve the
+feel of the original 2048, but something similar could be done with
+the main screen, where, depending on orientation of the screen, the
+button are to either side as opposed to just above the grid.
 
 % - Preferences
+\subsection{Preferences \& Permanent Storage}
+THe possibility of the user configuring our app is key to making it
+work. Firstly, we require the persistence of configurations across
+activity boundaries, such that we can navigate to our settings
+activity and back to the main activity with altered input methods.
+
+This could be done in-app with the message passing style that intents
+facilitate. However, we would also like for the users preferences to
+persist across sessions of interaction with the app, such that their
+favourite input method remains selected, even once the app is closed.
+
+This is precisely what the Android Framework offers through its
+\emph{Shared Preference} API. The shared preferences are a simple,
+key-value persistent storage of primitive types, which we use to store
+the input methods the user has selected. Simple and effective.
+
+We could have made use of more severe permanent storage like a SQLite
+datastore, but that would frankly be overkill for two integers.
+
 % - Externalization
 \subsection{Externalization}
 We make use of externalization, in order to achieve flexible code, and an adaptive app. 
@@ -237,8 +364,27 @@ the Android code.
 
 % chr: Files is an "external service"? Is that a "Content Provider"?
 
-% - intents
 % - Managers needed for device sensors
+\subsection{Device Sensors}
+We could not have done this app without the input and sensory hardware
+capabilities of a mobile platform like Android. As an example of a
+hardware sensor we tapped from the software, we used the screen
+orientation sensor, which is a software abstraction on top of the
+hardware accelerometer built into the hardware. We used a software
+lsitener to receive callbacks from the abstract sensor, and used these
+events to play the role of a controller in our central MVC.
+
+The screen orientation sensor is a simple sensor to work with,
+particularly comapred to something like the NFC, Bluetooth, WiFi or
+GPS signals, the accelerometer and the ambient lightsensor (when
+that's present on the hardware!). All these have a more complicated
+API which is why they weren't our first choice for integration into
+the app, but on the other hand, we have established a perfectly good
+MVC framework that can be easily extended with more controllers.
+
+This area is the one we by far regret the most not having enough time
+to explore further.
+
 % - Toasts
 \subsection{Toast}
 A Toast is part of the Android framework, is a temporary pop-up
@@ -246,6 +392,24 @@ message. We use Toast messages to notify the user that his highscore
 has been sent to the server.
 
 % - Custom views
+\subsection{Custom Views}
+Ah, our saving grace. The Android Framework provides several standard
+GUI components and layouts known as views. These standard components
+preserve the look and feel of the particular android device, to give a
+smooth and familiar experience for the user of your app, and a
+pleasent development experience where one is spared reinventing the
+wheel (or the button, in this case).
+
+Some apps just call for a unique look and feel, like ours, and so the
+framework provides the posssibility for developer code to extend the
+View class or any subclass like TextView, and overwrite the onDraw
+method. OnDraw takes a Canvas object representing a brush with which
+we can paint on the screen, and from then on the sky's the limit.
+
+We used this facility extensively in the main screen to capture the
+look and feel of Cirulli's 2048, in everything from an entirely new
+kind of view in the grid to simply stylized buttons.
+
 % We could have used
 % - Network connections
 % - Local storage?
