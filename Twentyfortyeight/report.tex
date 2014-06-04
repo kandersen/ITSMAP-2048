@@ -8,6 +8,7 @@
 
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{graphicx}
 
 \newcommand{\link}[1]{\href{http://#1}{\texttt{#1}}}
 
@@ -163,7 +164,7 @@ The app has to...
 \item ... provide an on-line highscore service, in order to make use
   of the connectivity features of the Android Platform and to enchance
   the social aspect of the game.
-\item ... provide appliaction developers with a framework for
+\item ... provide application developers with a framework for
   prototyping new input method variations for games of 2048.
 \end{itemize}
 
@@ -190,8 +191,81 @@ interactions with the views as events to the controllers, who bear the
 responsibility of translating these events into state changes on the
 model.
 
-% Assumptions for and explanatins of chosen design
-% UML + Sequence diagrams of key components in the APP
+The overall architecture is illustrated with the concrete interfaces
+of our app playing the roles of model, view and controller in the UML
+diagram in Figure \ref{fig:mvc-1.png}.
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{mvc-1.png}
+  \caption{The MVC pattern as implemented in our 2048 app}
+  \label{fig:mvc-1.png}
+\end{figure}
+
+The data that we store in our game is the state of the game board and
+the user score. This state also gives rise to some derived queries
+like the layout of the board (\code{getTiles()}) and wether the game
+is over or not (\code{isDone}). This state is used to visualize the
+state of the game, and whenever the game state changes the concrete
+implementation of \code{Engine} is supposed to call \code{onChange} on
+every registered EngineListener. These state changes are caused by the
+concrete EngineControllers in play, who have access to the modifiers
+of the Engine implementation. A minor twist on the classic MVC UML
+diagram is that the controller \emph{also} exhibits an interface for
+registering models, which we found necessary to handle the activity
+lifecycle with regards to resource handling in our app.
+
+We have two  concrete views in our  game, as detailed in  the full UML
+diagram of the MVC  implementation found in \label{fig:mvc-2.png}. One
+is  the  grid  (\code{TwentyfortyeightGrid})  and  the  other  is  the
+\code{ScoreView}, a GUI element for showing the score of the game. 
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{mvc-2.png}
+  \caption{The MVC pattern as implemented in our 2048 app, with all
+    concrete classes indicated.}
+  \label{fig:mvc-2.png}
+\end{figure}
+
+The controllers shown each implement a way of interpreting user events
+in terms of state updates on the game model. The volume key controller
+intercepts key presses to the volume controls present on all android
+devices, and translates into either vertical or horizontal slides,
+depending on which axis it was registered as controlling. The screen
+orientation controller similarly controls an axis by using the
+orientation around the horizontal axis as reference for motion
+events\footnote{We have found it works best for controlling the
+  horizontal axis!}. Finally, the swipe controller is a little
+interesting as it plays a role in two frameworks. For one, it's a
+controller in our MVC pattern. But then, it is also a \emph{listener}
+in the Observer pattern used by the Android Framework in order to
+handle events. As such it must be registered with a View (note, of the
+Android Framework GUI variety, not our pattern!) in order to receive
+input events. The \code{TwentyfortyeightGrid} plays a similar dual
+role, and so is aptly suited to act as the \emph{observed} object needed in
+the Android Observer pattern. An entire exchange between the
+\code{SwipController}, the \code{TwentyfortyeightGrid} and the
+\code{EngineImpl} is detailed in the sequence diagram in Figure \ref{fig:seq-1.png}:
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{seq-1.png}
+  \caption{A sample interaction between model, view and controller in
+    our app.}
+  \label{fig:seq-1.png}
+\end{figure}
+
+An unintended benefit gained from a strict implementation of the MVC
+is the clean separation of concerns. The data is cleanly encapsulated
+by the \code{Engine} interface. This means that testing with the
+technique known as mocking is a breeze. We implement a simplified to
+the point of triviality version of the game logic, such that it is
+both deterministic and entirely predictable. This version can be found
+in \code{MockEngine.java}, and was used while testing the various
+controllers and views. This way, the random logic of the engine and
+genral complexity of the real engine minimally camouflaged bugs and
+other errors in those components under the test. It's not quite unit
+testing, but the technique did allow us to isloate the components
+under the test under the assumption that the other components were so
+simply mocked that they could not be wrong!
 
 \section{Uses of the Android Framework}
 % We have used
