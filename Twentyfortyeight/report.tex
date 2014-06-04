@@ -7,22 +7,27 @@
 \usepackage[T1]{fontenc}
 
 \usepackage{amsmath}
+\usepackage{hyperref}
+
+\newcommand{\link}[1]{\href{http://#1}{\texttt{#1}}}
 
 \newcommand{\code}[1]{\texttt{#1}}
 
 \title{Reinventing 2048\\\large{An ITSMAP Project Report}}
-\author{Kristoffer Andersen\\\large{20103316} \and
+\author{Kristoffer Andersen \\ \large{20103316} \and
 Christian Clausen \\ \large{20081015}}
 \date{$6^{th}$ of June, 2014}
 
 \begin{document}
+% Front page
+\pagenumbering{gobble}
 \maketitle
-\nonumber
 \newpage
+% TOC
 \tableofcontents
 \newpage
-% Front page
-% TOC
+\pagenumbering{arabic}
+
 \section{Introduction}
 The game known as 2048 went viral in 2014 when Gabrielle Cirulli
 posted a simple game with a 4 by 4 grid with the squares from 2 to
@@ -66,12 +71,11 @@ tile with the sum of the two involved numbers. That is, as tile with
 the number 32 collides with another tile with the number 32, they
 merge to form a new tile with the number 64.
 
-The objective is the game is to form a tile with the number 2048. When
+The objective of the original game is to form a tile with the number 2048. When
 two tiles merge, the player is also awarded the sum of the two tiles
 in points.
 
-When the player has made a decision, slid the tiles and whatever
-merges may occur has occured, the game places a new tile in a randomly
+When the player has made a decision, resulting in a changed board, the game places a new tile in a randomly
 chosen empty cell, with the value 2 or 4.
 
 The dynamics of the game thus arise as the board fills up, making it
@@ -94,13 +98,20 @@ results in the corresponding move in the game.
 
 However, the fact that Cirulli decided to publically release the
 intellectual proprties associated with the game, the fact that the
-game is hoste don GitHub (such that with one click, one gets a
+game is hosted on GitHub (such that with one click, one gets a
 complete, hosted copy of Cirulli's game to alter as one sees fit, live
 and on the internet from the very first moment), combined with its
-accessibility has meant that it has inspired countless variations.
+accessibility, and addictiveness has meant that it has inspired countless variations.
 
-Some variations extend the dimensionality of the grid on which the
-game is played.
+There are too many to cover them all here, but we want to highlight a few of the more interesting ones. For a more complete list we refer to \link{http://phenomist.wordpress.com/2048-variants/}.
+
+The more interesting variations include:
+\begin{itemize}
+\item Extentions of the dimensionality of the grid.
+\item Multiplayer versions, such as a version where everybody on the site "votes" on which move should be the next.
+\item Other sequences, such as Fibonacci numbers, or even Molecules.
+\item Other difficulties, achived by making the spawning of tiles deterministic, which can either help, or the opposite.
+\end{itemize}
 
 
 
@@ -114,10 +125,24 @@ game is played.
 % - Preferences
 % - Externalization
 % - Background tasking / Async
-% - External services (RESTful servers) + Content Provider
+\subsection{Background Tasks}
+In parts of the project we wish to display information, that is not readily avalible, such as the license files, stored on the phone, or the highscore stored on a server. In these cases it makes sence to collect and prepare the information in a background task, so the user isn't nessasarily bothered by any possible wait there might be while loading the data.
+
+% - External services (RESTful servers) (+ Content Provider?)
+\subsection{External Services}
+In the development of the project we have used multiple external services, each treated hereunder.
+
+\subsubsection{RESTful Server}
+The highscore information stored on the server can be accessed through the JSON format, which we have previously worked with in the course. Thus we here follow the same structure: Create a URL, then a GetRequest, convert the input stream to a string, and then use Java's built-in libraries for JSON to parse the string. This way we could easily extend the project to store other informations such as the geolocation of each highscore, names, time of day, and so on. We could even extend the server with any of these, without changing anything in the Android code.
+
+% chr: Files is an "external service"? Is that a "Content Provider"?
+
 % - intents
 % - Managers needed for device sensors
 % - Toasts
+\subsection{Toast}
+A Toast is part of the Android framework, is a temporary pop-up message. We use Toast messages to notify the user that his highscore has been sent to the server.
+
 % - Custom views
 % We could have used
 % - Network connections
@@ -128,9 +153,11 @@ game is played.
 % Conclusion
 
 \newpage
+% chr: Do they ask for this?
 \section{Appendix: Workplan}
 \subsection{Christian's Contribution}
 \begin{itemize}
+\item The report
 \item \code{src/dk/compsci/twentyfortyeight/}
   \begin{itemize}
   \item \code{HighScoreActivity.java}
@@ -140,7 +167,7 @@ game is played.
   \begin{itemize}
   \item \code{activity\_highscore.xml}
   \end{itemize}
-\item The REST service running at \code{http://2048.compsci.dk/json.php}
+\item The REST service running at \code{http://2048.compsci.dk/json.php}, and the use hereof.
 \end{itemize}
 \subsection{Kristoffer's Contribution}
 \begin{itemize}
