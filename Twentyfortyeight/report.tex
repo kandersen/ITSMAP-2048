@@ -53,10 +53,10 @@ readers that are not familiar with it.
 
 \subsection{Core Game Mechanics}
 
-The game is played on a quadratic grid with 4 squares to a
+The game is played on a quadratic grid with four squares to a
 side. During the course of the game, the grid is filled with tiles
-that can be slid across the grid. The 4 only actions the player can
-take is to slide all tiles across the grid in one of the 4 cardinal
+that can be slid across the grid. The only four actions the player can
+take is to slide all tiles across the grid in one of the cardinal
 directions: up, down, left and right. \emph{Playing} the game thus
 amounts to deciding a sequence of these directions.
 
@@ -100,11 +100,91 @@ and on the internet from the very first moment), combined with its
 accessibility has meant that it has inspired countless variations.
 
 Some variations extend the dimensionality of the grid on which the
-game is played.
+game is played. If the game as envisioned by Cirulli is played on a
+plane, the 3D version is played \emph{in} a cube, and so on. We lack
+prepositions in the english language to describe how games are played
+in four dimensions and beyond, but the variations exist, readily up to
+at least 6 dimensions. To be able to fathom and play such a game is
+one thing; from a technical stand-point, it is interesting to consider
+how to control such a game. While the arrow keys, or a swipe on a
+touchscreen are completely believeable analogies to movement in two
+dimensions, it becomes much more difficult to come up with controls by
+analogy once the game extends three dimensions. Most implementations
+simply give the player yet another pair of keys to control movement
+alog the given dimensions. We will return to this point shortly.
 
+Other variations play on the aesthetics of the app, with pictures,
+popular internet memes, operators from the creator's favorite
+programming language, and so on. While entertaining and clearly a
+contributing part of the game as a phenomenon, it is from a technical
+perspective not very interesting.
 
+Some varitions are outside of a general description. A favourite
+implementation of ours is a democratized version: every player dials
+in to the server and ``votes'' for what the next move will be, as
+opposed to playing it directly. The social angle is defnitely a
+contributing factor to the success of the app, and this is playing
+that to the extreme.
+
+\subsection{Vision}
+
+We wish to investigate the input design-space. The idea originated
+from brainstorming what would make it possible to exhibit the features
+of the Android Framework and a mobile platform in a fun and obvious
+way.
+
+To make a general statement about the controls required for the game,
+we drew inspiration from the higher dimensionality variations that
+have been made, where they rather weakly just added another keypair to
+the set of controls. As such it becomes obvious that an input device
+for a game 2048 must just be able to produce two discernible, discrete
+signals in order to control movement along an axis. 
+
+Our vision with this prototype is to build an app that allows the
+prototyping of input control methods to a game of 2048. Mobile devices
+offer such a wealth of sensory input that a classic desktop setting
+simply cannot compete. 
+
+\subsection{Specification}
+
+The app has to...
+\begin{itemize}
+\item ... provide the basic functionality of a game of 2048.
+\item ... allow the user to select different input methods.
+\item ... provide an on-line highscore service, in order to make use
+  of the connectivity features of the Android Platform and to enchance
+  the social aspect of the game.
+\item ... provide appliaction developers with a framework for
+  prototyping new input method variations for games of 2048.
+\end{itemize}
 
 \section{Software Architecture}
+
+So there are two intrinsic forces guiding our hand in the design of
+this app. For one, it is an important consideration that we are
+working on the Android Platform. It has unavoidable consequences while
+offering unique opportunities. Secondly, we wish to build as flexible
+an app as possible, in order to facilitate the 
+
+The basic game logic is handled through a software architecture
+classic: the Model View Control pattern. The pattern is a OO oldie,
+and an architecture centered around the MVC pattern gives a range of
+benefits. Primarily it solves two problems given one assumption: data
+is shared. Problems then arise when we realize that the ways we wish
+\emph{to manipulate} and \emph{to visualize} it is variable, perhaps
+even undetermined. The MVC pattern then defines three \emph{roles}:
+the model, the view and the controller. The model has the
+responsibilities of maintaining the state of the data, and to notify
+the data visualizers (the views) when the data changes. The views have
+the responsibility of visualizing data, and possibly pass on the user
+interactions with the views as events to the controllers, who bear the
+responsibility of translating these events into state changes on the
+model.
+
+
+
+
+
 % Assumptions for and explanatins of chosen design
 % UML + Sequence diagrams of key components in the APP
 
