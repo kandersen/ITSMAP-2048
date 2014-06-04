@@ -13,7 +13,7 @@
 
 \newcommand{\code}[1]{\texttt{#1}}
 
-\title{Reinventing 2048\\\large{An ITSMAP Project Report}}
+\title{Reinventing 2048 \\ \large{An ITSMAP Project Report}}
 \author{Kristoffer Andersen \\ \large{20103316} \and
 Christian Clausen \\ \large{20081015}}
 \date{$6^{th}$ of June, 2014}
@@ -113,7 +113,12 @@ The more interesting variations include:
 \item Other difficulties, achived by making the spawning of tiles deterministic, which can either help, or the opposite.
 \end{itemize}
 
+\subsection{Our Version}
+In our version we wanted to make an Android version of the famous game, from scratch. Using the touch interface, and with a webservice where you could upload your highscore.
 
+We have removed the classical 'win-criterium' of reaching 2048, because we wanted to focus on the highscores, thus there is no difference in winning or losing.
+
+We have implemented it with instant changes, to facilitate speed, and keep the code simple and clear. Other then that we attempted to get the same look and feel there was in the original web-version.
 
 \section{Software Architecture}
 % Assumptions for and explanatins of chosen design
@@ -154,6 +159,7 @@ A Toast is part of the Android framework, is a temporary pop-up message. We use 
 
 \newpage
 % chr: Do they ask for this?
+\appendix
 \section{Appendix: Workplan}
 \subsection{Christian's Contribution}
 \begin{itemize}
