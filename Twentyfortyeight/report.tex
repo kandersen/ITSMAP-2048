@@ -196,8 +196,20 @@ model.
 \section{Uses of the Android Framework}
 % We have used
 % - Activities + Fragments
+\subsection{Activities and Fragments}
+To achieve our layout we use several Activities and Fragments.
+
 % - Preferences
 % - Externalization
+\subsection{Externalization}
+We make use of externalization, in order to achieve flexible code, and an adaptive app. 
+
+\subsubsection{Localization}
+We have used Sequyoa as seen in the course, in order to dynamically change the language between English and Danish. In this case the Android framework keeps track of the "strings.xml" file, and choses either the one located in "values" or "values-da" based on the user's language settings.
+
+\subsubsection{Colors}
+The iconic style of the App is greatly defined by it's colors, which are consistent through out. We acomplish this by also externalizing the colors into the "color.xml". This of course also means that we could use different colors depending on the language, screen size, or something like that, but we chose not to.
+
 % - Background tasking / Async
 \subsection{Background Tasks}
 In parts of the project we wish to display information, that is not
