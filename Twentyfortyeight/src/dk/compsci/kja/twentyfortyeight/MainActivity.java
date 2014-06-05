@@ -141,8 +141,10 @@ public class MainActivity extends Activity implements EngineListener {
 	@Override
 	public boolean dispatchKeyEvent(final KeyEvent event) {
 		boolean consumed = false;
-		for (SimpleKeyListener l : _keyListeners) {
-			consumed |= l.onKey(event.getKeyCode());
+		if(event.getAction() == KeyEvent.ACTION_DOWN) {
+			for (SimpleKeyListener l : _keyListeners) {
+				consumed |= l.onKey(event.getKeyCode());		
+			}
 		}
 		return consumed;
 	}
