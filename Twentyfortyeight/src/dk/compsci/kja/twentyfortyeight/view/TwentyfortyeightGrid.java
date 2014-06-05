@@ -31,6 +31,14 @@ public class TwentyfortyeightGrid extends View implements
 	private float[] fontSize;
 	private ArrayList<OnTouchListener> _onTouchListeners;
 
+	static int powerOfTwo(final int n) {
+		int res = 1;
+		for (int i = 0; i < n; i++) {
+			res *= 2;
+		}
+		return res;
+	}
+
 	public static final String[] TWO_TO_THE_POWER_OF =
 	{ "1", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048" };
 
@@ -136,10 +144,20 @@ public class TwentyfortyeightGrid extends View implements
 					+ cellSize);
 			canvas.drawRoundRect(cell, cornerRadius, cornerRadius,
 					emptyCellColor);
-			if (tiles[i] != 0) {
+			if (tiles[i] == 0) {
+			} else if (tiles[i] >= tileColors.length) {
+				canvas.drawRoundRect(cell, cornerRadius, cornerRadius,
+						tileColors[0]);
+				String string = "" + powerOfTwo(tiles[i]);
+				tileFontColors[0].setTextSize(fontSize[string.length()]);
+				int offset = (int) tileFontColors[0].getTextSize() / 3;
+				canvas.drawText(string.toString(), 0, string.length(), topLeftX
+						+ cellSize / 2, topLeftY + cellSize / 2 + offset,
+						tileFontColors[0]);
+			} else {
 				canvas.drawRoundRect(cell, cornerRadius, cornerRadius,
 						tileColors[tiles[i]]);
-				String string = TWO_TO_THE_POWER_OF[tiles[i]];
+				String string = "" + powerOfTwo(tiles[i]);
 				tileFontColors[tiles[i]].setTextSize(fontSize[string.length()]);
 				int offset = (int) tileFontColors[tiles[i]].getTextSize() / 3;
 				canvas.drawText(string.toString(), 0, string.length(), topLeftX
