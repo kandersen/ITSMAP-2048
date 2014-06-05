@@ -93,13 +93,13 @@
 	        android:layout_height="wrap_content"
 	        android:layout_margin="10dp"
 	        android:onClick="clickReset"
-	        android:text="Try Again" />
+	        android:text="@string/try_again" />
 
 		<dk.compsci.kja.twentyfortyeight.view.MainButton
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:onClick="clickSubmitScore"
-		    android:text="Submit Score" />
+		    android:text="@string/submit_score" />
 	        				
 	</LinearLayout>
 	

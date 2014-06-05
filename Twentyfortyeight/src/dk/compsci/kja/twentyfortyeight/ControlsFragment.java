@@ -3,12 +3,9 @@ package dk.compsci.kja.twentyfortyeight;
 import java.util.Arrays;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -22,16 +23,15 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class HighscoreActivity extends Activity {
 
-	private AsyncTask<Object, Object, ArrayList<String>> _task = new AsyncTask<Object, Object, ArrayList<String>>() {
+	private AsyncTask<Object, Object, List<String>> _task = new AsyncTask<Object, Object, List<String>>() {
 
 		@Override
-		protected ArrayList<String> doInBackground(final Object... arg0) {
+		protected List<String> doInBackground(final Object... arg0) {
 			String result = null;
 			URI myURI = null;
 
@@ -39,6 +39,7 @@ public class HighscoreActivity extends Activity {
 				myURI = new URI("http://2048.compsci.dk/json.php");
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
+				return Arrays.asList("No connection to the server!");
 			}
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet getMethod = new HttpGet(myURI);
@@ -47,8 +48,10 @@ public class HighscoreActivity extends Activity {
 				webServerResponse = httpClient.execute(getMethod);
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
+				return Arrays.asList("No connection to the server!");
 			} catch (IOException e) {
 				e.printStackTrace();
+				return Arrays.asList("No connection to the server!");
 			}
 
 			HttpEntity httpEntity = webServerResponse.getEntity();
@@ -68,6 +71,7 @@ public class HighscoreActivity extends Activity {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
+						return Arrays.asList("No connection to the server!");
 					} finally {
 						instream.close();
 					}
@@ -75,8 +79,10 @@ public class HighscoreActivity extends Activity {
 					instream.close();
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
+					return Arrays.asList("No connection to the server!");
 				} catch (IOException e) {
 					e.printStackTrace();
+					return Arrays.asList("No connection to the server!");
 				}
 
 			}
@@ -88,17 +94,17 @@ public class HighscoreActivity extends Activity {
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject windJSON = array.getJSONObject(i);
 
-					int score = windJSON.getInt("score");
 					res.add(windJSON.getString("score"));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
+				return Arrays.asList("No connection to the server!");
 			}
 			return res;
 		}
 
 		@Override
-		protected void onPostExecute(final ArrayList<String> result) {			
+		protected void onPostExecute(final List<String> result) {			
 			String[] strings = new String[result.size()];
 			result.toArray(strings);
 			_adapter = new ArrayAdapter<String>(HighscoreActivity.this, R.layout.simple_list_item, strings);
@@ -110,13 +116,11 @@ public class HighscoreActivity extends Activity {
 	};
 
 	private ArrayAdapter<String> _adapter;
-	private List<String> _list;
 
 	@Override
 	protected void onCreate(final Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_highscore);
-		_list = new ArrayList<String>();
 		_task.execute();
 	}
 

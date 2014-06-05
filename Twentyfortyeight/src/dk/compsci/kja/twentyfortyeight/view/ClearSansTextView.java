@@ -1,7 +1,9 @@
 package dk.compsci.kja.twentyfortyeight.view;
 
+import dk.compsci.kja.twentyfortyeight.R;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -26,7 +28,10 @@ public class ClearSansTextView extends TextView {
 
 	private void init(Context context) {		
 		if(!isInEditMode()) {
-			setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/ClearSans-Regular.ttf"));
+			Typeface clearSans = Typeface.createFromAsset(getContext().getApplicationContext().getAssets(), "fonts/ClearSans-Regular.ttf");
+			TextPaint paint = getPaint();
+			paint.setColor(getResources().getColor(R.color.tile_font_dark));
+			paint.setTypeface(clearSans);
 		}
 	}
 }
