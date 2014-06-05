@@ -5,14 +5,14 @@
     android:orientation="horizontal" android:baselineAligned="false">
 
     <fragment
-        android:name="dk.compsci.kja.twentyfortyeight.SettingsListFragment"
+        android:name="dk.compsci.kja.twentyfortyeight20103316.SettingsListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@id/fragment_settings_list"/>
 
     <fragment
-        android:name="dk.compsci.kja.twentyfortyeight.ControlsFragment"
+        android:name="dk.compsci.kja.twentyfortyeight20103316.ControlsFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"

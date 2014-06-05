@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

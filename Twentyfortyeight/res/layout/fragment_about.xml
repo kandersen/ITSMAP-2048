@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/about"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -19,7 +19,7 @@
         android:text="@string/title_2048"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -35,7 +35,7 @@
         android:layout_weight="1" 
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
-        <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+        <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
             android:id="@id/MIT_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
 
     </ScrollView>
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -52,7 +52,7 @@
         android:text="@string/clearsans"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -69,7 +69,7 @@
         android:layout_weight="1" 
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
-        <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+        <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
             android:id="@id/apache_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

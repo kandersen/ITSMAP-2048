@@ -1,4 +1,4 @@
-package dk.compsci.kja.twentyfortyeight;
+package dk.compsci.kja.twentyfortyeight20103316;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid;
+import dk.compsci.kja.twentyfortyeight20103316.view.TwentyfortyeightGrid;
 
 public class SwipeEngineController implements EngineController, GestureDetector.OnGestureListener, View.OnTouchListener {
 

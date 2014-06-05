@@ -1,6 +1,6 @@
-package dk.compsci.kja.twentyfortyeight.view;
+package dk.compsci.kja.twentyfortyeight20103316.view;
 
-import dk.compsci.kja.twentyfortyeight.R;
+import dk.compsci.kja.twentyfortyeight20103316.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;

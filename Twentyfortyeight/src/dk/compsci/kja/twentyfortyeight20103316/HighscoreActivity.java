@@ -1,4 +1,4 @@
-package dk.compsci.kja.twentyfortyeight;
+package dk.compsci.kja.twentyfortyeight20103316;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <fragment
-        android:name="dk.compsci.kja.twentyfortyeight.SettingsListFragment"
+        android:name="dk.compsci.kja.twentyfortyeight20103316.SettingsListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@id/fragment_settings_list"/>

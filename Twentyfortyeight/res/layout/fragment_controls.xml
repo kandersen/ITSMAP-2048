@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
         android:text="@string/controls"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -28,7 +28,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
-    <dk.compsci.kja.twentyfortyeight.view.ClearSansTextView
+    <dk.compsci.kja.twentyfortyeight20103316.view.ClearSansTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

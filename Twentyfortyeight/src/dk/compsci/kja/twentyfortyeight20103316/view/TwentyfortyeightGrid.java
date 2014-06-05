@@ -1,4 +1,4 @@
-package dk.compsci.kja.twentyfortyeight.view;
+package dk.compsci.kja.twentyfortyeight20103316.view;
 
 import java.util.ArrayList;
 
@@ -11,9 +11,9 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import dk.compsci.kja.twentyfortyeight.Engine;
-import dk.compsci.kja.twentyfortyeight.EngineListener;
-import dk.compsci.kja.twentyfortyeight.R;
+import dk.compsci.kja.twentyfortyeight20103316.Engine;
+import dk.compsci.kja.twentyfortyeight20103316.EngineListener;
+import dk.compsci.kja.twentyfortyeight20103316.R;
 
 public class TwentyfortyeightGrid extends View implements
 		EngineListener {

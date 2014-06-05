@@ -13,7 +13,7 @@
 		<LinearLayout android:layout_width="match_parent"
 			android:layout_height="0dp" android:layout_weight="1">
 
-			<dk.compsci.kja.twentyfortyeight.view.Title
+			<dk.compsci.kja.twentyfortyeight20103316.view.Title
 			    android:layout_width="0dp"
 			    android:layout_height="fill_parent"
 			    android:layout_marginBottom="10dp"
@@ -24,7 +24,7 @@
 			<View android:layout_width="0dp" android:layout_height="match_parent"
 				android:layout_weight="0.5" />
 
-			<dk.compsci.kja.twentyfortyeight.view.ScoreView
+			<dk.compsci.kja.twentyfortyeight20103316.view.ScoreView
 			    android:id="@id/score_view"
 			    android:layout_width="0dp"
 			    android:layout_height="match_parent"
@@ -38,7 +38,7 @@
 			android:layout_height="0dp" android:layout_weight="1"
 			android:orientation="horizontal">
 
-			<dk.compsci.kja.twentyfortyeight.view.MainButton
+			<dk.compsci.kja.twentyfortyeight20103316.view.MainButton
 			    android:layout_width="0dp"
 			    android:layout_height="match_parent"
 			    android:layout_marginBottom="10dp"
@@ -48,7 +48,7 @@
 			    android:onClick="clickHighscore"
 			    android:text="@string/highscores" />
 
-			<dk.compsci.kja.twentyfortyeight.view.MainButton
+			<dk.compsci.kja.twentyfortyeight20103316.view.MainButton
 			    android:layout_width="0dp"
 			    android:layout_height="match_parent"
 			    android:layout_marginBottom="10dp"
@@ -58,7 +58,7 @@
 			    android:onClick="clickSettings"
 			    android:text="@string/settings" />
 
-			<dk.compsci.kja.twentyfortyeight.view.MainButton
+			<dk.compsci.kja.twentyfortyeight20103316.view.MainButton
 			    android:layout_width="0dp"
 			    android:layout_height="match_parent"
 			    android:layout_marginBottom="10dp"
@@ -70,7 +70,7 @@
 
 		</LinearLayout>
 
-		<dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid
+		<dk.compsci.kja.twentyfortyeight20103316.view.TwentyfortyeightGrid
 		    android:id="@id/grid"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
@@ -88,14 +88,14 @@
 	    android:orientation="vertical"
 	    android:visibility="gone" >
 
-	    <dk.compsci.kja.twentyfortyeight.view.MainButton
+	    <dk.compsci.kja.twentyfortyeight20103316.view.MainButton
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_margin="10dp"
 	        android:onClick="clickReset"
 	        android:text="@string/try_again" />
 
-		<dk.compsci.kja.twentyfortyeight.view.MainButton
+		<dk.compsci.kja.twentyfortyeight20103316.view.MainButton
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:onClick="clickSubmitScore"

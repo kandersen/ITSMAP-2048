@@ -1,6 +1,6 @@
-package dk.compsci.kja.twentyfortyeight.view;
+package dk.compsci.kja.twentyfortyeight20103316.view;
 
-import dk.compsci.kja.twentyfortyeight.R;
+import dk.compsci.kja.twentyfortyeight20103316.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -34,7 +34,7 @@ public class MainButton extends Button {
 
 	public void init() {
 		_boxColor = new Paint();
-		_boxColor.setColor(getResources().getColor(R.color.tile_font_dark));
+		_boxColor.setColor(getResources().getColor(dk.compsci.kja.twentyfortyeight20103316.R.color.tile_font_dark));
 		_boxColor.setAntiAlias(true);		
 
 		_box = new RectF();		

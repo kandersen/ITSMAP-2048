@@ -1,4 +1,4 @@
-package dk.compsci.kja.twentyfortyeight;
+package dk.compsci.kja.twentyfortyeight20103316;
 
 import java.io.IOException;
 import java.net.URI;
@@ -23,8 +23,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Toast;
-import dk.compsci.kja.twentyfortyeight.view.ScoreView;
-import dk.compsci.kja.twentyfortyeight.view.TwentyfortyeightGrid;
+import dk.compsci.kja.twentyfortyeight20103316.view.ScoreView;
+import dk.compsci.kja.twentyfortyeight20103316.view.TwentyfortyeightGrid;
 
 public class MainActivity extends Activity implements EngineListener {
 

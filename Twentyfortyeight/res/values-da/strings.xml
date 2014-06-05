@@ -10,4 +10,9 @@
     <string name="app_name">Tyveotteogfyrre</string>
     <string name="MIT_msg">Teksten af MIT Licensen kan findes på </string>
     <string name="settings">Indstillinger</string>
+    <string name="submit_score">Upload score</string>
+    <string name="try_again">Prøv igen</string>
+    <string name="volume_control">Lydkontrol</string>
+    <string name="screen_rotation">Skærmorientering</string>
+    <string name="vertical_axis">Lodrette Akse</string>
 </resources>

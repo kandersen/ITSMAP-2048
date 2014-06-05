@@ -1,4 +1,4 @@
-package dk.compsci.kja.twentyfortyeight;
+package dk.compsci.kja.twentyfortyeight20103316;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
