@@ -1,10 +1,7 @@
-% chr: We are inconsistant about if we write App or app
-
-
 \documentclass[a4paper, 12pt]{article}
 %\usepackage[a4paper,hmargin=3cm,vmargin=3cm]{geometry}
 \usepackage[english]{babel}
-\usepackage[applemac]{inputenc}
+\usepackage[applemac]
 \usepackage[sc]{mathpazo}
 \linespread{1.05}         % Palatino needs more leading (space between lines)
 \usepackage[T1]{fontenc}
@@ -75,12 +72,13 @@ tile with the sum of the two involved numbers. That is, as tile with
 the number 32 collides with another tile with the number 32, they
 merge to form a new tile with the number 64.
 
-The objective of the original game is to form a tile with the number 2048. When
-two tiles merge, the player is also awarded the sum of the two tiles
-in points.
+The objective of the original game is to form a tile with the number
+2048. When two tiles merge, the player is also awarded the sum of the
+two tiles in points.
 
-When the player has made a decision, resulting in a changed board, the game places a new tile in a randomly
-chosen empty cell, with the value 2 or 4.
+When the player has made a decision, resulting in a changed board, the
+game places a new tile in a randomly chosen empty cell, with the value
+2 or 4.
 
 The dynamics of the game thus arise as the board fills up, making it
 more difficult for the player to merge tiles. And, as the game
@@ -104,7 +102,7 @@ However, the fact that Cirulli decided to publicly release the
 intellectual properties associated with the game, the fact that the
 game is hosted on GitHub (such that with one click, one gets a
 complete, hosted copy of Cirulli's game to alter as one sees fit, live
-and on the internet from the very first moment), combined with its
+and on the Internet from the very first moment), combined with its
 accessibility, and addictiveness has meant that it has inspired
 countless variations.
 
@@ -116,13 +114,13 @@ in four dimensions and beyond, but the variations exist, readily up to
 at least 6 dimensions. To be able to fathom and play such a game is
 one thing; from a technical stand-point, it is interesting to consider
 how to control such a game. While the arrow keys, or a swipe on a
-touchscreen are completely believable analogies to movement in two
+touch screen are completely believable analogies to movement in two
 dimensions, it becomes much more difficult to come up with controls by
 analogy once the game extends three dimensions. Most implementations
 simply give the player yet another pair of keys to control movement
 along the given dimensions. We will return to this point shortly.
 
-Other variations play on the aesthetics of the app, with pictures,
+Other variations play on the esthetics of the app, with pictures,
 popular internet memes, operators from the creator's favorite
 programming language, and so on. While entertaining and clearly a
 contributing part of the game as a phenomenon, it is from a technical
@@ -148,7 +146,7 @@ way.
 
 To make a general statement about the controls required for the game,
 we drew inspiration from the higher dimensionality variations that
-have been made, where they rather weakly just added another keypair to
+have been made, where they rather weakly just added another key-pair to
 the set of controls. As such it becomes obvious that an input device
 for a game 2048 must just be able to produce two discernible, discrete
 signals in order to control movement along an axis. 
@@ -164,7 +162,7 @@ The app has to...
 \begin{itemize}
 \item ... provide the basic functionality, look and feel of a game of 2048.
 \item ... allow the user to select different input methods.
-\item ... provide an on-line highscore service, in order to make use
+\item ... provide an on-line high score service, in order to make use
   of the connectivity features of the Android Platform and to enhance
   the social aspect of the game.
 \item ... provide application developers with a framework for
@@ -177,7 +175,8 @@ So there are two intrinsic forces guiding our hand in the design of
 this app. For one, it is an important consideration that we are
 working on the Android Platform. It has unavoidable consequences while
 offering unique opportunities. Secondly, we wish to build as flexible
-an app as possible, in order to facilitate the 
+an app as possible, in order to facilitate easy extension of the
+collection of possible user input methods.
 
 The basic game logic is handled through a software architecture
 classic: the Model View Control pattern. The pattern is a OO oldie,
@@ -217,10 +216,10 @@ diagram is that the controller \emph{also} exhibits an interface for
 registering models, which we found necessary to handle the activity
 life cycle with regards to resource handling in our app.
 
-We have two  concrete views in our  game, as detailed in  the full UML
-diagram of the MVC  implementation found in \label{fig:mvc-2.png}. One
-is  the  grid  (\code{TwentyfortyeightGrid})  and  the  other  is  the
-\code{ScoreView}, a GUI element for showing the score of the game. 
+We have two concrete views in our game, as detailed in the full UML
+diagram of the MVC implementation found in \label{fig:mvc-2.png}. One
+is the grid and the other is the \code{ScoreView}, a GUI element for
+showing the score of the game.
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{mvc-2.png}
@@ -231,7 +230,7 @@ is  the  grid  (\code{TwentyfortyeightGrid})  and  the  other  is  the
 
 The controllers shown each implement a way of interpreting user events
 in terms of state updates on the game model. The volume key controller
-intercepts key presses to the volume controls present on all android
+intercepts key presses to the volume controls present on all Android
 devices, and translates into either vertical or horizontal slides,
 depending on which axis it was registered as controlling. The screen
 orientation controller similarly controls an axis by using the
@@ -244,10 +243,11 @@ in the Observer pattern used by the Android Framework in order to
 handle events. As such it must be registered with a View (note, of the
 Android Framework GUI variety, not our pattern!) in order to receive
 input events. The \code{TwentyfortyeightGrid} plays a similar dual
-role, and so is aptly suited to act as the \emph{observed} object needed in
-the Android Observer pattern. An entire exchange between the
-\code{SwipController}, the \code{TwentyfortyeightGrid} and the
-\code{EngineImpl} is detailed in the sequence diagram in Figure \ref{fig:seq-1.png}:
+role, and so is aptly suited to act as the \emph{observed} object
+needed in the Android Observer pattern. An entire exchange between the
+\code{SwipeController}, the \code{TwentyfortyeightGrid} and the
+\code{EngineImpl} is detailed in the sequence diagram in Figure
+\ref{fig:seq-1.png}:
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{seq-1.png}
@@ -278,21 +278,21 @@ its own subsection.
 % We have used
 % - Activities + Fragments + Intents
 \subsection{Activities, Intents and Fragments}
-One cannot create an Android App without touching these two parts of
+One cannot create an Android app without touching these two parts of
 the API. The activity and fragment abstraction clearly isolate ``doing
 one thing'' on a mobile device, and intents allow for the transitions
 between them. Logically, we have an activity and/or fragment for each
 interaction a user can have with our app.
 
 We have an activity displaying the main grid, for interaction with the
-game state and the submission of highscores. We have an activity for
-the display of submitted highscores. We have a fragment for changing
+game state and the submission of high-scores. We have an activity for
+the display of submitted high-scores. We have a fragment for changing
 the active input method, and we have a fragment for displaying
 licensing details where we pay homage to the original 2048 in addition
 to the people making the font we used available.
 
 The use of fragments is key to making dynamic layouts. Unlike its
-competitor, the iOS platform, an Android App should expect to run on a
+competitor, the iOS platform, an Android app should expect to run on a
 countless number of hardware configurations, with varying screen
 sizes, resolutions and aspects to say the least. To that end, the
 Android Framework provides isolated GUI and logic components known as
@@ -312,7 +312,7 @@ button are to either side as opposed to just above the grid.
 
 % - Preferences
 \subsection{Preferences \& Permanent Storage}
-THe possibility of the user configuring our app is key to making it
+The possibility of the user configuring our app is key to making it
 work. Firstly, we require the persistence of configurations across
 activity boundaries, such that we can navigate to our settings
 activity and back to the main activity with altered input methods.
@@ -328,40 +328,69 @@ key-value persistent storage of primitive types, which we use to store
 the input methods the user has selected. Simple and effective.
 
 We could have made use of more severe permanent storage like a SQLite
-datastore, but that would frankly be overkill for two integers.
+data store, but that would frankly be overkill for two integers.
 
 % - Externalization
 \subsection{Externalization}
-We make use of externalization, in order to achieve flexible code, and an adaptive app. 
+We make use of externalization, in order to achieve flexible code, and
+an adaptive app. Externalization embodies a classical computer science
+saying: any problem can be solved by yet another layer of
+indirection. By introducing a layer of indirection, the running code
+becomes unaware of \emph{what concrete value} it is manipulating at
+run time, only \emph{the name} it can refer to that value by on
+compile time. This simple ``trick'', if you will, is used to many
+effects on the Android platform. 
+
+\subsubsection{Layouts}
+By externalizing layouts into XML files, we can achieve dynamic
+layouts. We used the trick taught through the obligatory course work:
+by creating a reference to a larger layout that is only in effect on
+large devices, we automagically use a more information-dense layout on
+devices with large screens for out settings activity.
 
 \subsubsection{Localization}
-We have used Sequyoa as seen in the course, in order to dynamically change the language between English and Danish. In this case the Android framework keeps track of the "strings.xml" file, and choses either the one located in "values" or "values-da" based on the user's language settings.
+We have used Sequyoa as seen in the course, in order to dynamically
+change the language between English and Danish. In this case the
+Android Framework keeps track of the "strings.xml" file, and chooses
+either the one located in "values" or "values-da" based on the user's
+language settings.
 
 \subsubsection{Colors}
-The iconic style of the App is greatly defined by it's colors, which are consistent through out. We accomplish this by also externalizing the colors into the "color.xml". This of course also means that we could use different colors depending on the language, screen size, or something like that, but we chose not to.
+The iconic style of the app is greatly defined by its colors, which
+are consistent through out. We accomplish this by also externalizing
+the colors into the "color.xml". This of course also means that we
+could use different colors depending on the language, screen size, or
+something like that, but we chose not to, as to preserve the look and
+feel of the app.
 
 % - Background tasking / Async
 \subsection{Background Tasks}
 In parts of the project we wish to display information, that is not
 readily available, such as the license files, stored on the phone, or
-the highscore stored on a server. In these cases it makes sense to
+the high-score stored on a server. In these cases it makes sense to
 collect and prepare the information in a background task, so the user
 isn't necessarily bothered by any possible wait there might be while
-loading the data. The user should never feel like the App is unresponsive. After loading the data we could have used broadcasts to signal that an update to the view needs to occur, but since the view has the background task, we chose the simpler option and let the task update the view directly.
+loading the data. The user should never feel like the app is
+unresponsive. After loading the data we could have used broadcasts to
+signal that an update to the view needs to occur, but since the view
+has the background task, we chose the simpler option and let the task
+update the view directly.
 
 % - External services (RESTful servers) (+ Content Provider?)
 \subsection{External Services}
-In our App we wish to share information among all of our users, namely the highscore list. Therefore we have to use some external service to store the information on the internet.
+In our app we wish to share information among all of our users, namely
+the high-score list. Therefore we have to use some external service to
+store the information on the internet.
 
-We chose to have the highscore information stored on a RESTful server, that can be accessed through
-the JSON format, which we have previously worked with during the
-course. Thus we here follow the same structure: Create a URL, then a
-GetRequest, convert the input stream to a string, and then use Java's
-built-in libraries for JSON to parse the string. This way we could
-easily extend the project to store other informations such as the
-geolocation of each highscore, names, time of day, language, screen size, and so on. We could
-even extend the server with any of these, without changing anything in
-the Android code.
+We chose to have the high-score information stored on a RESTful server,
+that can be accessed through the JSON format, which we have previously
+worked with during the course. Thus we here follow the same structure:
+Create a URL, then a GetRequest, convert the input stream to a string,
+and then use Java's built-in libraries for JSON to parse the
+string. This way we could easily extend the project to store other
+informations such as the geolocation of each high-score, names, time of
+day, language, screen size, and so on. We could even extend the server
+with any of these, without changing anything in the Android code.
 
 % - Managers needed for device sensors
 \subsection{Device Sensors}
@@ -370,7 +399,7 @@ capabilities of a mobile platform like Android. As an example of a
 hardware sensor we tapped from the software, we used the screen
 orientation sensor, which is a software abstraction on top of the
 hardware accelerometer built into the hardware. We used a software
-listener to receive callbacks from the abstract sensor, and used these
+listener to receive call-backs from the abstract sensor, and used these
 events to play the role of a controller in our central MVC.
 
 The screen orientation sensor is a simple sensor to work with,
@@ -387,14 +416,17 @@ to explore further.
 % - Toasts
 \subsection{Toast}
 A Toast is part of the Android framework, is a temporary pop-up
-message. We use Toast messages to notify the user that his highscore
-has been sent to the server, in order to provide a smooth, and comfortable experience for the user. As previously mentioned the user should never feel like the App is unresponsive, so when he presses a button it helps to provide a visual response in the form of a Toast.
+message. We use Toast messages to notify the user that his high-score
+has been sent to the server, in order to provide a smooth, and
+comfortable experience for the user. As previously mentioned the user
+should never feel like the app is unresponsive, so when he presses a
+button it helps to provide a visual response in the form of a Toast.
 
 % - Custom views
 \subsection{Custom Views}
 Ah, our saving grace. The Android Framework provides several standard
 GUI components and layouts known as views. These standard components
-preserve the look and feel of the particular android device, to give a
+preserve the look and feel of the particular Android device, to give a
 smooth and familiar experience for the user of your app, and a
 pleasant development experience where one is spared reinventing the
 wheel (or the button, in this case).
@@ -417,20 +449,52 @@ kind of view in the grid to simply stylized buttons.
 % Couldn't use?
 
 \subsection{Content Provider}
-A Content Provider functions as a local RESTful server, eg. a local SQL database in which you could store persistent data, provided you get the permissions.
+A Content Provider functions as a local RESTful server, e.g. a local
+SQL database in which you could store persistent data, provided you
+get the permissions.
+
+\subsection{The Java Language}
+Finally, the Java programming language is a mature, well established,
+well documented technology with which we are already familiar, having
+been taught the language as part of our CS background. The ability to
+code something as integral and admittedly a little delicate as an
+MVC pattern ``as we usually would'', enabled speed and flexibility to
+our development process.
+
+Aspects like concurrency and collections libraries are where Java has
+already made a name for itself, and the ability to leverage all that
+on the Android platform is ingenious and invaluable.
+
+On the other, this does mean you are coding in Java. Java is slightly
+verbose and at times slightly cumbersome, lacking (more or less)
+modern features like higher-order functions and algebraic data types. 
 
 \section{Conclusion}
 % Conclusion
-What we have demonstrated with this project is how to develop a functional and complete Android App. An App that uses Android features such as touch, store preferences persistently, and communicates with a RESTful server. We have succeeded in adapting a know design from a web-service, into a mobile interface, and preserving the same look-and-feel.
+What we have demonstrated with this project is how to develop a
+functional and complete Android app. An app that uses Android features
+such as touch, store preferences persistently, and communicates with a
+RESTful server. We have succeeded in adapting a know design from a
+web-service, into a mobile interface, and preserving the same
+look-and-feel.
 
 % Future Work
-The project we have made, could be extended in a lot of ways, such as the option of attaching ones name when you submit a highscore, or the country one resides in, thereby we could add a second highscore list by country, so users had another parameter to compete on, if they didn't want to give up their name.
+The project we have made, could be extended in a lot of ways, such as
+the option of attaching ones name when you submit a high-score, or the
+country one resides in, thereby we could add a second high-score list
+by country, so users had another parameter to compete on, if they
+didn't want to give up their name.
 
-We could have also added animations, a different win screen, the option of choosing a different sequence, or undo functionality. Basically we could have incorporated almost any of the variations.
+We could have also added animations, a different win screen, the
+option of choosing a different sequence, or undo
+functionality. Basically we could have incorporated almost any of the
+variations, and with a flexible software design well established, the
+extension along any of the three axes in the MVC pattern is easy and
+reliable.
 
 \newpage
 \appendix
-\section{Appendix: Workplan}
+\section{Appendix: Work plan}
 \subsection{Christian's Contribution}
 \begin{itemize}
 \item \code{src/dk/compsci/twentyfortyeight/}
